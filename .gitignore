@@ -1,0 +1,20 @@
+# Data (too large for git)
+dpt2020.csv
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.synctex.gz
+
+# Archives
+*.zip
+
+# System
+.DS_Store
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Brainstorm folder
+Brainstorm_groupB/

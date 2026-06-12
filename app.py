@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 
 import dash
 import numpy as np
@@ -7,27 +6,12 @@ import pandas as pd
 import plotly.express as px
 from dash import Input, Output, dcc, html
 
-BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / "Names hints"
 MIN_NATIONAL_BIRTHS = 1000
 MIN_DEPARTMENT_BIRTHS = 20
 
-
-def find_data_file(filename):
-    """Cherche un fichier dans le dossier de données puis à la racine."""
-    for folder in (DATA_DIR, BASE_DIR):
-        path = folder / filename
-        if path.exists():
-            return path
-
-    raise FileNotFoundError(
-        f"{filename} est introuvable dans '{DATA_DIR}' ou '{BASE_DIR}'."
-    )
-
-
 print("Chargement des données...")
 
-df = pd.read_csv(find_data_file("dpt2020.csv"), sep=";")
+df = pd.read_csv("Names hints/dpt2020.csv", sep=";")
 df = df.rename(
     columns={
         "preusuel": "prenom",
@@ -39,8 +23,9 @@ df = df[(df["annee"] != "XXXX") & (df["departement"] != "XX")].copy()
 df["annee"] = df["annee"].astype(int)
 df["sexe"] = df["sexe"].map({1: "M", 2: "F"})
 
-with find_data_file("departements-version-simplifiee.geojson").open(
-    encoding="utf-8"
+with open(
+    "Names hints/departements-version-simplifiee.geojson",
+    encoding="utf-8",
 ) as geojson_file:
     geojson_france = json.load(geojson_file)
 
